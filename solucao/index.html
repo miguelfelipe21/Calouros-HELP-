@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IA Conversa</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/axios.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>IA Conversa</h2>
+      <button id="newChatBtn">+ Novo Chat</button>
+      <ul id="chatList"></ul>
+    </aside>
+
+    <!-- Main chat -->
+    <section class="chat-container">
+      <header class="chat-header">
+        <h1>HelpMeChat</h1>
+        <button id="themeBtn">🌙</button>
+      </header>
+
+      <main id="chat"></main>
+
+      <footer class="chat-footer">
+        <textarea id="msgInput" placeholder="Digite sua mensagem..."></textarea>
+        <button id="sendBtn">Enviar</button>
+      </footer>
+    </section>
+  </div>
+
+  <script src="assets/js/jquery-3.7.1.min.js"></script>
+  <!--script src="assets/js/chat.js"></script-->
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
