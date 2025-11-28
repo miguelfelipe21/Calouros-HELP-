@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calouros Help - Consulta de Editais</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/img/logoPIBIC_semfundo.png">
+  <script src="assets/js/axios.min.js"></script>
+</head>
+<body>
+
+<audio autoplay preload="auto" src="./assets/audios/sound.mp3" id="sound"></audio>
+
+  <!-- Splash Screen -->
+<div id="splashScreen" class="splash">
+  <div class="splash-content">
+    <img src="/assets/img/gifPIBIC.gif" alt="Logo do Projeto" class="splash-logo">
+    <h1>CALOUROS HELP</h1>
+    <p>Carregando...</p>
+    <div class="loading-spinner"></div>
+  </div>
+</div>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- <h2>Consulta de Editais</h2> -->
+      <button id="newChatBtn">+ Novo Chat</button>
+      <button id="deleteChatsBtn" class="delete-btn">🗑️ Limpar Chat</button>
+      
+      <!-- Seção de PDFs PRÉ-CARREGADOS -->
+      <div id="pdfList" class="pdf-list">
+        <div class="pdf-list-header"> Editais Disponíveis:</div>
+      </div>
+      
+      <ul id="chatList"></ul>
+    </aside>
+
+    <!-- Main chat -->
+    <section class="chat-container">
+      <header class="chat-header">
+        <h1>CalourosHelp</h1>
+        <button id="themeBtn">🌙</button>
+      </header>
+
+      <main id="chat"></main>
+
+      <div class="quick-questions-container">
+        <div class="quick-questions">
+          <button class="quick-question-btn" onclick="document.getElementById('msgInput').value = 'Que dia é a prova do ENEM?'; document.getElementById('msgInput').focus();">Que dia é a prova do ENEM?</button>
+          <button class="quick-question-btn" onclick="document.getElementById('msgInput').value = 'Qual a data limite para o pagamento da taxa de inscrição na UFMG?'; document.getElementById('msgInput').focus();">Qual a data limite para o pagamento da taxa de inscrição na UFMG?</button>
+          <button class="quick-question-btn" onclick="document.getElementById('msgInput').value = 'Posso usar caneta verde no ENEM?'; document.getElementById('msgInput').focus();">Posso usar caneta verde no ENEM?</button>
+          <button class="quick-question-btn" onclick="document.getElementById('msgInput').value = 'Tem curso de química no vestibular seriado?'; document.getElementById('msgInput').focus();">Tem curso de química no vestibular seriado?</button>
+      
+        </div>
+      </div>
+
+      <footer class="chat-footer">
+        <textarea id="msgInput" placeholder="Digite sua pergunta sobre os editais..."></textarea>
+        <button id="sendBtn">Enviar</button>
+      </footer>
+    </section>
+  </div>
+
+  <script src="assets/js/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
