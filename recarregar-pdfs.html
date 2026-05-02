@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recarregar PDFs - CalourosHelp</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .edital-box { 
+            border: 2px solid #4CAF50; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 8px;
+        }
+        button { 
+            background: #4CAF50; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer;
+        }
+        button:hover { background: #45a049; }
+        .resultado { 
+            padding: 10px; 
+            margin: 5px 0; 
+            border-radius: 4px; 
+        }
+        .sucesso { background: #d4edda; border: 1px solid #c3e6cb; }
+        .erro { background: #f8d7da; border: 1px solid #f5c6cb; }
+        code { 
+            background: #f1f1f1; 
+            padding: 2px 5px; 
+            border-radius: 3px; 
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔄 Recarregar PDFs para CalourosHelp</h1>
+    <p><strong>Instruções:</strong> Recarregue CADA PDF individualmente e copie o novo sourceId</p>
+    
+    <div class="edital-box">
+        <h3>📚 Edital ENEM 2025</h3>
+        <input type="file" id="enemFile" accept=".pdf">
+        <button onclick="uploadPDF('enemFile', 'ENEM')">🔄 Recarregar ENEM</button>
+        <div id="resultado-enem"></div>
+    </div>
+    
+    <div class="edital-box">
+        <h3>🎓 Edital CEFET 2025</h3>
+        <input type="file" id="cefetFile" accept=".pdf">
+        <button onclick="uploadPDF('cefetFile', 'CEFET')">🔄 Recarregar CEFET</button>
+        <div id="resultado-cefet"></div>
+    </div>
+    
+    <div class="edital-box">
+        <h3>🏫 Edital IFMG 2025</h3>
+        <input type="file" id="ifmgFile" accept=".pdf">
+        <button onclick="uploadPDF('ifmgFile', 'IFMG')">🔄 Recarregar IFMG</button>
+        <div id="resultado-ifmg"></div>
+    </div>
+    
+    <div class="edital-box">
+        <h3>🏫 Edital UFMG 2025</h3>
+        <input type="file" id="ufmgFile" accept=".pdf">
+        <button onclick="uploadPDF('ufmgFile', 'UFMG')">🔄 Recarregar UFMG</button>
+        <div id="resultado-ufmg"></div>
+    </div>
+
+    <div style="margin-top: 30px; padding: 15px; background: #e7f3ff; border-radius: 8px;">
+        <h3>📝 O que fazer depois:</h3>
+        <ol>
+            <li>Recarregue cada PDF (um por vez)</li>
+            <li>Copie o sourceId de cada um</li>
+            <li>Abra o arquivo <code>script.js</code></li>
+            <li>Substitua os sourceIds antigos pelos novos</li>
+            <li>Salve e teste novamente!</li>
+        </ol>
+    </div>
+
+    <script>
+        const CHATPDF_API_KEY = "sec_oNSB8e6u0ii7J5jpRILoMFgGYMdIiksM";
+
+        async function uploadPDF(inputId, nomeEdital) {
+            const fileInput = document.getElementById(inputId);
+            const file = fileInput.files[0];
+            const resultadoDiv = document.getElementById(`resultado-${nomeEdital.toLowerCase()}`);
+            
+            if (!file) {
+                alert(`❌ Por favor, selecione o arquivo PDF do ${nomeEdital}`);
+                return;
+            }
+
+            try {
+                resultadoDiv.innerHTML = `<div class="resultado">📤 Enviando ${file.name}...</div>`;
+                
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await axios.post('https://api.chatpdf.com/v1/sources/add-file', formData, {
+                    headers: {
+                        'x-api-key': CHATPDF_API_KEY,
+                    },
+                });
+
+                const sourceId = response.data.sourceId;
+                
+                resultadoDiv.innerHTML = `
+                    <div class="resultado sucesso">
+                        ✅ <strong>${nomeEdital} CARREGADO COM SUCESSO!</strong><br><br>
+                        <strong>Arquivo:</strong> ${file.name}<br>
+                        <strong>Novo SourceId:</strong><br>
+                        <code>${sourceId}</code><br><br>
+                        <button onclick="copiarTexto('${sourceId}')">📋 Copiar SourceId</button>
+                        <small style="color: green;">✅ Copie este código e substitua no script.js</small>
+                    </div>
+                `;
+
+            } catch (error) {
+                resultadoDiv.innerHTML = `
+                    <div class="resultado erro">
+                        ❌ <strong>ERRO ao carregar ${nomeEdital}</strong><br><br>
+                        <strong>Erro:</strong> ${error.response?.data?.message || error.message}<br>
+                        <strong>Arquivo:</strong> ${file.name}
+                    </div>
+                `;
+            }
+        }
+
+        function copiarTexto(texto) {
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('✅ SourceId copiado para a área de transferência!');
+            });
+        }
+    </script>
+</body>
+</html>
